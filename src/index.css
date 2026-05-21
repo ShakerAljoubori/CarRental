@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+    box-sizing: border-box;
+  }
+
+  /* Zero-scroll lock — the entire app is a fullscreen state machine */
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body {
+    @apply bg-obsidian text-platinum;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgba(222, 184, 135, 0.15);
+    color: #deb887;
+  }
+}
+
+@layer utilities {
+  /* Burlywood laser glow */
+  .laser-line {
+    background: #deb887;
+    box-shadow: 0 0 6px rgba(222, 184, 135, 0.9), 0 0 18px rgba(222, 184, 135, 0.35);
+  }
+
+  /* Gradient text */
+  .text-shimmer {
+    background: linear-gradient(135deg, #f4f4f5 0%, #e8dcc4 55%, #deb887 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Glassmorphism panel */
+  .glass-panel {
+    background: rgba(20, 20, 20, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(232, 220, 196, 0.08);
+  }
+
+  /* Lighter glass variant for inner blocks */
+  .glass-panel-light {
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(232, 220, 196, 0.07);
+  }
+}
+
+/* MOTION word — glowing laser underline */
+.word-motion {
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.04em;
+}
+
+.word-motion::before,
+.word-motion::after {
+  content: '';
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(222, 184, 135, 0.5) 15%,
+    rgba(222, 184, 135, 0.95) 40%,
+    rgba(222, 184, 135, 0.95) 60%,
+    rgba(222, 184, 135, 0.5) 85%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px  rgba(222, 184, 135, 0.7),
+    0 0 18px rgba(222, 184, 135, 0.35),
+    0 0 40px rgba(222, 184, 135, 0.15);
+}
+
+.word-motion::after  { bottom: -7px; }
+.word-motion::before { bottom: -13px; }
+
+/* ── Header CTA — parallelogram shimmer sweep ──────────────────────────── */
+.btn-slant {
+  position: relative;
+  overflow: hidden;
+  transition: filter 0.35s ease;
+}
+
+.btn-slant::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -90%;
+  width: 60%;
+  height: 140%;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.38) 50%,
+    transparent 80%
+  );
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+
+.btn-slant:hover::before { left: 150%; }
+.btn-slant:hover {
+  filter: brightness(1.15) drop-shadow(0 0 14px rgba(222, 184, 135, 0.55));
+}
+
+/* ── Bottom ghost CTA — fill sweep + border glow ───────────────────────── */
+.btn-ghost {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease, border-color 0.35s ease, filter 0.35s ease;
+}
+
+.btn-ghost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(222, 184, 135, 0.12) 0%,
+    rgba(222, 184, 135, 0.06) 100%
+  );
+  transform: translateX(-101%);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.btn-ghost:hover::before        { transform: translateX(0); }
+.btn-ghost:hover {
+  border-color: rgba(222, 184, 135, 0.75) !important;
+  color: #deb887 !important;
+  filter: drop-shadow(0 0 12px rgba(222, 184, 135, 0.25));
+}
+
+/* ── Nav links — underline expands from center ─────────────────────────── */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #deb887 30%,
+    #deb887 70%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px rgba(222, 184, 135, 0.8), 0 0 20px rgba(222, 184, 135, 0.3);
+  transition: left 0.35s ease, right 0.35s ease;
+}
+
+.nav-link:hover::after {
+  left: 0;
+  right: 0;
+}
+
+/* Ignition button breathing glow */
+@keyframes buttonGlow {
+  0%, 100% {
+    box-shadow: 0 0 35px rgba(222, 184, 135, 0.15),
+                0 0 10px rgba(222, 184, 135, 0.08),
+                inset 0 0 30px rgba(222, 184, 135, 0.04);
+  }
+  50% {
+    box-shadow: 0 0 65px rgba(222, 184, 135, 0.32),
+                0 0 25px rgba(222, 184, 135, 0.16),
+                inset 0 0 45px rgba(222, 184, 135, 0.1);
+  }
+}
+
+.ignition-glow {
+  animation: buttonGlow 2.8s ease-in-out infinite;
+}
