@@ -165,16 +165,6 @@ export default function App() {
               ))}
             </ul>
 
-            <button
-              onClick={() => goToScene(1)}
-              className="btn-slant font-sans text-[14px] tracking-[0.06em] font-medium bg-burlywood text-obsidian"
-              style={{
-                padding:  '10px 36px',
-                clipPath: 'polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%)',
-              }}
-            >
-              EXPLORE FLEET
-            </button>
           </div>
         </header>
       )}
