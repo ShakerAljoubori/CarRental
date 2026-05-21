@@ -16,6 +16,8 @@ export default function Hero({ isActive, onNavigate }) {
   const xpanderRef     = useRef(null)
   const xpanderBeamRef = useRef(null)
   const mazdaBeamRef   = useRef(null)
+  const xpanderGlowRef = useRef(null)
+  const mazdaGlowRef   = useRef(null)
   const firstActive    = useRef(true)
 
   useEffect(() => {
@@ -29,6 +31,7 @@ export default function Hero({ isActive, onNavigate }) {
     gsap.killTweensOf([
       car, xpander,
       xpanderBeamRef.current, mazdaBeamRef.current,
+      xpanderGlowRef.current, mazdaGlowRef.current,
       panelRef.current, headlineRef.current, ctaRef.current,
     ])
 
@@ -79,11 +82,13 @@ export default function Hero({ isActive, onNavigate }) {
     const idleTimer = setTimeout(() => {
       gsap.to(xpanderBeamRef.current, { opacity: 0.7, duration: 2.6, ease: 'sine.inOut', repeat: -1, yoyo: true })
       gsap.to(mazdaBeamRef.current,   { opacity: 0.6, duration: 3.2, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 0.8 })
+      gsap.to(xpanderGlowRef.current, { opacity: 1,   duration: 3.8, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 0.3 })
+      gsap.to(mazdaGlowRef.current,   { opacity: 1,   duration: 4.4, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 1.5 })
     }, idleDelay)
 
     return () => {
       clearTimeout(idleTimer)
-      gsap.killTweensOf([xpanderBeamRef.current, mazdaBeamRef.current])
+      gsap.killTweensOf([xpanderBeamRef.current, mazdaBeamRef.current, xpanderGlowRef.current, mazdaGlowRef.current])
     }
   }, [isActive])
 
@@ -153,6 +158,42 @@ export default function Hero({ isActive, onNavigate }) {
           filter:       'blur(15px)',
           mixBlendMode: 'screen',
           zIndex:       2,
+          opacity:      0,
+        }}
+      />
+
+      {/* ── Xpander body glow ───────────────────────────────────── */}
+      <div
+        ref={xpanderGlowRef}
+        className="pointer-events-none"
+        style={{
+          position:     'absolute',
+          right:        '30%',
+          bottom:       '11vh',
+          width:        '26vw',
+          height:       '22vh',
+          borderRadius: '50%',
+          background:   'radial-gradient(ellipse at 50% 65%, rgba(222,184,135,0.22) 0%, rgba(180,120,60,0.09) 48%, transparent 74%)',
+          filter:       'blur(36px)',
+          zIndex:       2,
+          opacity:      0,
+        }}
+      />
+
+      {/* ── Mazda body glow ─────────────────────────────────────── */}
+      <div
+        ref={mazdaGlowRef}
+        className="pointer-events-none"
+        style={{
+          position:     'absolute',
+          right:        '10%',
+          bottom:       '19vh',
+          width:        '20vw',
+          height:       '16vh',
+          borderRadius: '50%',
+          background:   'radial-gradient(ellipse at 50% 65%, rgba(222,184,135,0.16) 0%, rgba(180,120,60,0.06) 48%, transparent 74%)',
+          filter:       'blur(28px)',
+          zIndex:       1,
           opacity:      0,
         }}
       />
